@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   // const { data: user, isLoading: userIsLoading } = useGetUser();
-    const res = axios.get('http://licznik.wyjazdowo.eu/api/users');
+    const res = axios.get('http://licznik.wyjazdowo.eu/api/users').then(res => res.data);
     console.log(res)
   return (
     <>
