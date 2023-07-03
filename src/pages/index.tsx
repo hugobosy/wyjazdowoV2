@@ -8,12 +8,12 @@ import axios from "axios";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  // const { data: user, isLoading: userIsLoading } = useGetUser();
-    const res = axios.get('http://licznik.wyjazdowo.eu/api/users').then(res => res.data);
-    console.log(res)
+  const { data: user, isLoading: userIsLoading } = useGetUser();
+  //   const res = axios.get('https://licznik.wyjazdowo.eu/api/users');
+    console.log(user)
   return (
     <>
-      <h1>Pała</h1>
-    </>
+    {!userIsLoading && user.map((user: any) =><p>{user.login}</p>)}
+      </>
   )
 }
