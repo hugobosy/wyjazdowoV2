@@ -13,7 +13,7 @@ export default function Home() {
     console.log(user)
   return (
     <>
-    {!userIsLoading && user.map((user: any) =><p>{user.login}</p>)}
+    {!userIsLoading && user.map((user: any, index: number) =><p key={index}>{user.login}</p>)}
       </>
   )
 }
