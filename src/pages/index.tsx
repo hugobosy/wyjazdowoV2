@@ -76,7 +76,7 @@ export default function Home() {
         </form>
       </fieldset>
 
-      <h3>Rejestracja</h3>
+      <h3>Logowanie</h3>
       <fieldset>
         <form>
           <label htmlFor='authLogin'>Login: </label>
