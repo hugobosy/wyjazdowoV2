@@ -1,32 +1,39 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import { Inter } from 'next/font/google';
-import styles from '@/styles/Home.module.css';
 import { useGetUser } from '@/hooks/queries/useGetUser';
-import axios from 'axios';
 import { SyntheticEvent, useState } from 'react';
 import { useRegisterMutation } from '@/hooks/mutations/useRegisterMutation';
-
-const inter = Inter({ subsets: ['latin'] });
+import { useLoginMutation } from '@/hooks/mutations/useLoginMutation';
 
 export default function Home() {
   const { data: user, isLoading: userIsLoading } = useGetUser();
-  const { mutate: onRegister } = useRegisterMutation();
+  const { mutate: onRegister, isLoading: registerLoading, isError: registerError } = useRegisterMutation();
+  const { mutate: onLogin } = useLoginMutation();
   const [register, setRegister] = useState({
     login: '',
     email: '',
+    password: '',
+  });
+
+  const [login, setLogin] = useState({
+    login: '',
     password: '',
   });
   //   const res = axios.get('https://licznik.wyjazdowo.eu/api/users');
 
   const handleRegister = (e: SyntheticEvent) => {
     e.preventDefault();
-    onRegister(register, {onSuccess: () => {
+    onRegister(register, {
+      onSuccess: () => {
         console.log('success');
       },
-    onError: (res) => {
-      console.log(res);
-    }})
+      onError: (res) => {
+        console.log(res);
+      },
+    });
+  };
+
+  const handleLogin = (e: SyntheticEvent) => {
+    e.preventDefault();
+    onLogin(login)
   };
 
   return (
@@ -52,6 +59,22 @@ export default function Home() {
                  id='password' />
           <br />
           <button type='submit' onClick={handleRegister}>Rejestracja</button>
+        </form>
+      </fieldset>
+
+      <h3>Rejestracja</h3>
+      <fieldset>
+        <form>
+          <label htmlFor='authLogin'>Login: </label>
+          <input type='text' value={login.login} onChange={e => setLogin({ ...login, login: e.target.value })}
+                 id='authLogin' />
+          <br />
+          <label htmlFor='authPassword'>Hasło: </label>
+          <input type='password' value={login.password}
+                 onChange={e => setLogin({ ...login, password: e.target.value })}
+                 id='authPassword' />
+          <br />
+          <button type='submit' onClick={handleLogin}>Zaloguj</button>
         </form>
       </fieldset>
     </>

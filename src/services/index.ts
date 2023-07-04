@@ -28,6 +28,15 @@ export class ApiService {
     }
   }
 
+  async login(data: any) {
+    try {
+      console.log(data);
+      return await axios.post('https://licznik.wyjazdowo.eu/api/users/login', data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
 }
 
 export const apiService = new ApiService();
