@@ -37,6 +37,15 @@ export class ApiService {
     }
   }
 
+  async setDrive(data: any) {
+    try {
+      console.log(data);
+      return await axios.post('https://licznik.wyjazdowo.eu/api/add-km/220', data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
 }
 
 export const apiService = new ApiService();
