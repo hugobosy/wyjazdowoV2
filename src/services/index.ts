@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAccessTokenCookie } from '@/utils/cookie';
 
 export class ApiService {
   constructor() {
@@ -6,9 +7,14 @@ export class ApiService {
 
   async getUser(page = 1) {
     try {
-      const res = await axios.get('https://licznik.wyjazdowo.eu/api/users', {params: {page: page}});
-      console.log(res);
-      return res.data.data;
+      // const res = await axios.get('https://licznik.wyjazdowo.eu/api/users', {params: {page: page}});
+      const res = await axios.get('http://localhost:3001/users', {
+        headers: {
+          Authorization: `Bearer ${getAccessTokenCookie()}`
+        }
+      })
+      console.log(res.data);
+      return res.data[0];
 
     } catch (err) {
       return err;
@@ -30,8 +36,8 @@ export class ApiService {
 
   async login(data: any) {
     try {
-      console.log(data);
-      return await axios.post('https://licznik.wyjazdowo.eu/api/users/login', data)
+      const res = await axios.post(`http://localhost:3001/login/${data.login}`, data)
+      return res.data
     } catch (err) {
       console.log(err);
     }

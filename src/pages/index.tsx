@@ -26,9 +26,13 @@ export default function Home() {
     zip: '',
     city: '',
   });
+
+  console.log(onLogin);
+
+  const [km, setKm] = useState('');
   //   const res = axios.get('https://licznik.wyjazdowo.eu/api/users');
 
-  const handleRegister = (e: SyntheticEvent) => {
+  const handleRegister = async (e: SyntheticEvent) => {
     e.preventDefault();
     onRegister(register, {
       onSuccess: () => {
@@ -42,20 +46,20 @@ export default function Home() {
 
   const handleLogin = (e: SyntheticEvent) => {
     e.preventDefault();
-    onLogin(login, { onSuccess: () => console.log('Zalogowany') });
+    onLogin(login, { onSuccess: (res) => console.log(res.data) });
   };
 
   const handleDrive = (e: SyntheticEvent) => {
     e.preventDefault();
-    onSetDrive(drive, {onSuccess: () => console.log('Km dodane')})
+    onSetDrive(km, { onSuccess: () => console.log('Km dodane') });
   };
 
   return (
     <>
       <h3>Lista uzytkowników</h3>
-      <ul>
+      {user?.response?.status === 403 ? <h1>Brak autoryzacji</h1> : <ol>
         {!userIsLoading && user.map((user: any, index: number) => <li key={index}>{user.login}</li>)}
-      </ul>
+      </ol>}
 
       <h3>Rejestracja</h3>
       <fieldset>
@@ -95,21 +99,26 @@ export default function Home() {
       <h3>Dodaj trasę</h3>
       <fieldset>
         <form>
-          <label htmlFor='street'>Adres: </label>
-          <input type='text' value={drive.street} onChange={e => setDrive({ ...drive, street: e.target.value })}
-                 id='authLogin' />
-          <br />
-          <label htmlFor='street'>Numer: </label>
-          <input type='text' value={drive.house} onChange={e => setDrive({ ...drive, house: e.target.value })}
-                 id='authLogin' />
-          <br />
-          <label htmlFor='street'>Kod pocztowy: </label>
-          <input type='text' value={drive.zip} onChange={e => setDrive({ ...drive, zip: e.target.value })}
-                 id='authLogin' />
-          <br />
-          <label htmlFor='street'>Miasto: </label>
-          <input type='text' value={drive.city} onChange={e => setDrive({ ...drive, city: e.target.value })}
-                 id='authLogin' />
+          {/*<label htmlFor='street'>Adres: </label>*/}
+          {/*<input type='text' value={drive.street} onChange={e => setDrive({ ...drive, street: e.target.value })}*/}
+          {/*       id='authLogin' />*/}
+          {/*<br />*/}
+          {/*<label htmlFor='street'>Numer: </label>*/}
+          {/*<input type='text' value={drive.house} onChange={e => setDrive({ ...drive, house: e.target.value })}*/}
+          {/*       id='authLogin' />*/}
+          {/*<br />*/}
+          {/*<label htmlFor='street'>Kod pocztowy: </label>*/}
+          {/*<input type='text' value={drive.zip} onChange={e => setDrive({ ...drive, zip: e.target.value })}*/}
+          {/*       id='authLogin' />*/}
+          {/*<br />*/}
+          {/*<label htmlFor='street'>Miasto: </label>*/}
+          {/*<input type='text' value={drive.city} onChange={e => setDrive({ ...drive, city: e.target.value })}*/}
+          {/*       id='authLogin' />*/}
+          {/*<br />*/}
+
+          <label htmlFor='km'>Km: </label>
+          <input type='text' value={km} onChange={e => setKm(e.target.value)}
+                 id='km' />
           <br />
           <button type='submit' onClick={handleDrive}>Dodaj trasę</button>
         </form>
