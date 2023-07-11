@@ -24,11 +24,7 @@ export class ApiService {
   async register(data: any) {
     try {
       console.log(data);
-      return await axios.post('https://licznik.wyjazdowo.eu/api/users/register', data, {
-        headers: {
-          'Content-Type': "application/json"
-        }
-      });
+      return await axios.post('http://localhost:3001/register', data);
     } catch (err) {
       return err;
     }

@@ -1,3 +1,4 @@
 export const PROJECT_URL = {
-  login: '/logowanie'
+  login: '/logowanie',
+  register: '/rejestracja'
 }

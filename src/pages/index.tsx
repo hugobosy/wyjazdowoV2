@@ -1,22 +1,12 @@
 import { useGetUser } from '@/hooks/queries/useGetUser';
 import { SyntheticEvent, useState } from 'react';
-import { useRegisterMutation } from '@/hooks/mutations/useRegisterMutation';
 import { useSetDrive } from '@/hooks/mutations/useSetDrive';
 import Link from 'next/link';
 import { PROJECT_URL } from '@/const/projectUrl';
 
 export default function Home() {
   const { data: user, isLoading: userIsLoading } = useGetUser();
-  const { mutate: onRegister, isLoading: registerLoading, isError: registerError } = useRegisterMutation();
-
   const { mutate: onSetDrive } = useSetDrive();
-  const [register, setRegister] = useState({
-    login: '',
-    email: '',
-    password: '',
-  });
-
-
 
   const [drive, setDrive] = useState({
     street: '',
@@ -27,18 +17,6 @@ export default function Home() {
 
   const [km, setKm] = useState('');
   //   const res = axios.get('https://licznik.wyjazdowo.eu/api/users');
-
-  const handleRegister = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    onRegister(register, {
-      onSuccess: () => {
-        console.log('success');
-      },
-      onError: (res) => {
-        console.log(res);
-      },
-    });
-  };
 
   const handleDrive = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -52,26 +30,9 @@ export default function Home() {
         {!userIsLoading && user.map((user: any, index: number) => <li key={index}>{user.login}</li>)}
       </ol>}
 
-      <h3>Rejestracja</h3>
-      <fieldset>
-        <form>
-          <label htmlFor='login'>Login: </label>
-          <input type='text' value={register.login} onChange={e => setRegister({ ...register, login: e.target.value })}
-                 id='login' />
-          <br />
-          <label htmlFor='email'>Email: </label>
-          <input type='text' value={register.email} onChange={e => setRegister({ ...register, email: e.target.value })}
-                 id='email' /> <br />
-          <label htmlFor='password'>Hasło: </label>
-          <input type='password' value={register.password}
-                 onChange={e => setRegister({ ...register, password: e.target.value })}
-                 id='password' />
-          <br />
-          <button type='submit' onClick={handleRegister}>Rejestracja</button>
-        </form>
-      </fieldset>
-
       <Link href={PROJECT_URL.login} >Zaloguj</Link>
+      &nbsp;
+      <Link href={PROJECT_URL.register} >Rejestracja</Link>
 
 
       <h3>Dodaj trasę</h3>
