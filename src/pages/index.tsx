@@ -1,13 +1,14 @@
 import { useGetUser } from '@/hooks/queries/useGetUser';
 import { SyntheticEvent, useState } from 'react';
 import { useRegisterMutation } from '@/hooks/mutations/useRegisterMutation';
-import { useLoginMutation } from '@/hooks/mutations/useLoginMutation';
 import { useSetDrive } from '@/hooks/mutations/useSetDrive';
+import Link from 'next/link';
+import { PROJECT_URL } from '@/const/projectUrl';
 
 export default function Home() {
   const { data: user, isLoading: userIsLoading } = useGetUser();
   const { mutate: onRegister, isLoading: registerLoading, isError: registerError } = useRegisterMutation();
-  const { mutate: onLogin } = useLoginMutation();
+
   const { mutate: onSetDrive } = useSetDrive();
   const [register, setRegister] = useState({
     login: '',
@@ -15,10 +16,7 @@ export default function Home() {
     password: '',
   });
 
-  const [login, setLogin] = useState({
-    login: '',
-    password: '',
-  });
+
 
   const [drive, setDrive] = useState({
     street: '',
@@ -26,8 +24,6 @@ export default function Home() {
     zip: '',
     city: '',
   });
-
-  console.log(onLogin);
 
   const [km, setKm] = useState('');
   //   const res = axios.get('https://licznik.wyjazdowo.eu/api/users');
@@ -42,11 +38,6 @@ export default function Home() {
         console.log(res);
       },
     });
-  };
-
-  const handleLogin = (e: SyntheticEvent) => {
-    e.preventDefault();
-    onLogin(login, { onSuccess: (res) => console.log(res.data) });
   };
 
   const handleDrive = (e: SyntheticEvent) => {
@@ -80,21 +71,8 @@ export default function Home() {
         </form>
       </fieldset>
 
-      <h3>Logowanie</h3>
-      <fieldset>
-        <form>
-          <label htmlFor='authLogin'>Login: </label>
-          <input type='text' value={login.login} onChange={e => setLogin({ ...login, login: e.target.value })}
-                 id='authLogin' />
-          <br />
-          <label htmlFor='authPassword'>Hasło: </label>
-          <input type='password' value={login.password}
-                 onChange={e => setLogin({ ...login, password: e.target.value })}
-                 id='authPassword' />
-          <br />
-          <button type='submit' onClick={handleLogin}>Zaloguj</button>
-        </form>
-      </fieldset>
+      <Link href={PROJECT_URL.login} >Zaloguj</Link>
+
 
       <h3>Dodaj trasę</h3>
       <fieldset>
