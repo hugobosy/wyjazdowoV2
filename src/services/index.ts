@@ -39,6 +39,15 @@ export class ApiService {
     }
   }
 
+  async logout(id: string) {
+    try {
+      const res = await axios.delete(`http://localhost:3001/logout/${id}`)
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async setDrive(data: any) {
     try {
       console.log(data);
@@ -48,6 +57,17 @@ export class ApiService {
     }
   }
 
+  async getMatchesRuch() {
+    try {
+      return await axios.get('http://localhost:3001/matches/ruch', {
+        headers: {
+          Authorization: `Bearer ${getAccessTokenCookie()}`
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 export const apiService = new ApiService();

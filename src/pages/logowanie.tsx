@@ -7,7 +7,7 @@ export default function Login() {
   const router = useRouter();
 
   const [login, setLogin] = useState({
-    login: '',
+    username: '',
     password: '',
   });
 
@@ -21,7 +21,7 @@ export default function Login() {
     <fieldset>
     <form>
       <label htmlFor='authLogin'>Login: </label>
-      <input type='text' value={login.login} onChange={e => setLogin({ ...login, login: e.target.value })}
+      <input type='text' value={login.username} onChange={e => setLogin({ ...login, username: e.target.value })}
              id='authLogin' />
       <br />
       <label htmlFor='authPassword'>Hasło: </label>

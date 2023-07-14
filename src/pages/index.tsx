@@ -62,6 +62,7 @@ export default function Home() {
           <button type='submit' onClick={handleDrive}>Dodaj trasę</button>
         </form>
       </fieldset>
+      <Link href={PROJECT_URL.matches.ruch}>Tabela meczy Ruchu</Link>
     </>
   );
 }

@@ -5,7 +5,7 @@ import { setAccessTokenCookie } from '@/utils/cookie';
 export const useLoginMutation = () => {
   return useMutation(apiService.login, {
     onSuccess: (res) => {
-      setAccessTokenCookie(res);
+      setAccessTokenCookie(res.token);
     },
     onError: (res) => {
       // @ts-ignore

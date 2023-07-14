@@ -1,7 +1,9 @@
 import { SyntheticEvent, useState } from 'react';
 import { useRegisterMutation } from '@/hooks/mutations/useRegisterMutation';
+import { useRouter } from 'next/router';
 
 export default function Register() {
+  const router = useRouter();
   const { mutate: onRegister, isLoading: registerLoading, isError: registerError } = useRegisterMutation();
 
   const [register, setRegister] = useState({
@@ -16,12 +18,15 @@ export default function Register() {
     e.preventDefault();
     onRegister(register, {
       onSuccess: (res: any) => {
-        console.log(res.response.status);
-        if(res.response.status === 401) {
+        if(res.response?.status === 401) {
           setError('Login lub email istnieje juz w bazie')
           return
         }
-        setError('')
+        console.log(res);
+        if(res.status === 201) {
+          router.push('/')
+          return
+        }
       },
       onError: (res) => {
         console.log(res);
